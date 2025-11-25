@@ -72,6 +72,7 @@ public class AnalisadorRomNES {
             } else {
                 // Dorme o tempo restante aproximado para o próximo frame
                 long sleepMillis = (long) ((nsPerFrame - elapsed) / 1_000_000L);
+
                 if (sleepMillis > 0) {
                     try {
                         Thread.sleep(sleepMillis);

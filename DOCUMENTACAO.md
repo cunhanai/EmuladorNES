@@ -22,8 +22,8 @@ Este é um **emulador funcional do console Nintendo Entertainment System (NES)**
 - **Funcional**: Executar ROMs de jogos NES reais (como Super Mario Bros)
 
 ### Autores
-- Daniel Neves
-- Ana Julia da Cunha
+- Daniel Iensen Neves
+- Ana Júlia da Cunha
 
 ### Contexto Acadêmico
 **Disciplina**: Sistemas Operacionais - 6º Semestre  
@@ -49,9 +49,9 @@ Este é um **emulador funcional do console Nintendo Entertainment System (NES)**
 └─┬──────┬──────┬──────┬──────┬──────┬───────────────────┘
   │      │      │      │      │      │
   ▼      ▼      ▼      ▼      ▼      ▼
-┌───┐  ┌───┐  ┌───┐  ┌─────┐ ┌────┐ ┌──────────┐
+┌───┐  ┌───┐  ┌───┐  ┌──────┐ ┌────┐ ┌──────────┐
 │CPU│  │PPU│  │APU│  │Memory│ │I/O │ │ Mapper   │
-└───┘  └───┘  └───┘  └─────┘ └────┘ └──────────┘
+└───┘  └───┘  └───┘  └──────┘ └────┘ └──────────┘
   │      │      │       │       │         │
   └──────┴──────┴───────┴───────┴─────────┘
                  │
