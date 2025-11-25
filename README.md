@@ -70,17 +70,22 @@ hardware clássico de 8-bit.
 - Java 8 ou superior instalado
 - Arquivo de ROM NES (.nes) em formato iNES
 - IDEA IntelliJ (mais estável)
+- Windows
 
 ### Execução
 
-- Compilar o projeto
-
 ```bash
+# Compilar o projeto
+cd "C:\caminho\para\projeto"; 
+New-Item -ItemType Directory -Force out | Out-Null; 
+$files = Get-ChildItem -Path src -Recurse -Filter *.java | ForEach-Object { $_.FullName }; 
+javac -encoding UTF-8 -cp src -d out $files
+
 # Executar com uma ROM
-java AnalisadorRomNES "caminho/para/jogo.nes"
+java -cp out AnalisadorRomNES "caminho/para/jogo.nes"
 
 # Exemplo:
-java AnalisadorRomNES "Super Mario Bros. (Europe).nes"
+java -cp out AnalisadorRomNES "Super Mario Bros. (Europe).nes"
 ```
 
 ### 🎮 Mapeamento dos controles
