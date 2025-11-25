@@ -69,6 +69,12 @@ public class AudioOutput {
      */
     public void stop() {
         if (line != null && running) {
+            // Envia samples restantes antes de parar
+            if (bufferPosition > 0) {
+                line.write(buffer, 0, bufferPosition);
+                bufferPosition = 0;
+            }
+            line.drain(); // Aguarda reprodução completa
             line.stop();
             running = false;
             System.out.println("Reprodução de áudio parada");
@@ -100,19 +106,35 @@ public class AudioOutput {
 
         // Se o buffer está cheio, envia para a linha de áudio
         if (bufferPosition >= buffer.length) {
-            // Verifica se há espaço disponível antes de escrever (evita bloqueio)
-            int available = line.available();
-            if (available >= buffer.length) {
-                int written = line.write(buffer, 0, buffer.length);
-                if (written < buffer.length) {
-                    System.err.println("Audio buffer underrun! Written: " + written + "/" + buffer.length);
-                }
-            } else {
-                // Se não há espaço, descarta samples antigos e continua
-                // Melhor ter um pequeno gap do que travamento
-                System.err.println("Audio buffer full, skipping " + buffer.length + " bytes");
-            }
+            flushBuffer();
             bufferPosition = 0;
+        }
+    }
+
+    /**
+     * Envia o buffer para a linha de áudio, aguardando se necessário
+     */
+    private void flushBuffer() {
+        if (line == null || !running) {
+            return;
+        }
+
+        // Aguarda até que haja espaço suficiente no buffer da linha de áudio
+        // Isso sincroniza automaticamente a emulação com a reprodução de áudio
+        while (line.available() < buffer.length && running) {
+            try {
+                // Aguarda um pouco antes de verificar novamente
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+
+        // Escreve o buffer completo
+        int written = line.write(buffer, 0, buffer.length);
+        if (written < buffer.length) {
+            System.err.println("Audio buffer underrun! Written: " + written + "/" + buffer.length);
         }
     }
 

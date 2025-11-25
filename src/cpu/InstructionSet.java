@@ -632,7 +632,26 @@ public class InstructionSet {
             cpu.setA(cpu.getA() | value);
             cpu.updateZN(cpu.getA());
         }));
-        
+
+        // ORA (Indirect),Y (0x11)
+        instructionMap.put(0x11, createInstruction("ORA", 5, cpu -> {
+            int zp = cpu.readByte(cpu.getPC());
+            cpu.setPC(cpu.getPC() + 1);
+            int addr = (cpu.readWord(zp) + cpu.getY()) & 0xFFFF;
+            int value = cpu.readByte(addr);
+            cpu.setA(cpu.getA() | value);
+            cpu.updateZN(cpu.getA());
+        }));
+
+        // ORA Zero Page,X (0x15)
+        instructionMap.put(0x15, createInstruction("ORA", 4, cpu -> {
+            int addr = (cpu.readByte(cpu.getPC()) + cpu.getX()) & 0xFF;
+            cpu.setPC(cpu.getPC() + 1);
+            int value = cpu.readByte(addr);
+            cpu.setA(cpu.getA() | value);
+            cpu.updateZN(cpu.getA());
+        }));
+
         // ORA Absolute,Y (0x19)
         instructionMap.put(0x19, createInstruction("ORA", 4, cpu -> {
             int addr = (cpu.readWord(cpu.getPC()) + cpu.getY()) & 0xFFFF;
@@ -658,7 +677,17 @@ public class InstructionSet {
             cpu.setA(cpu.getA() ^ value);
             cpu.updateZN(cpu.getA());
         }));
-        
+
+        // EOR (Indirect,X) (0x41)
+        instructionMap.put(0x41, createInstruction("EOR", 6, cpu -> {
+            int zp = (cpu.readByte(cpu.getPC()) + cpu.getX()) & 0xFF;
+            cpu.setPC(cpu.getPC() + 1);
+            int addr = cpu.readWord(zp);
+            int value = cpu.readByte(addr);
+            cpu.setA(cpu.getA() ^ value);
+            cpu.updateZN(cpu.getA());
+        }));
+
         // EOR Zero Page
         instructionMap.put(0x45, createInstruction("EOR", 3, cpu -> {
             int addr = cpu.readByte(cpu.getPC());
@@ -671,6 +700,43 @@ public class InstructionSet {
         // EOR Absolute
         instructionMap.put(0x4D, createInstruction("EOR", 4, cpu -> {
             int addr = cpu.readWord(cpu.getPC());
+            cpu.setPC(cpu.getPC() + 2);
+            int value = cpu.readByte(addr);
+            cpu.setA(cpu.getA() ^ value);
+            cpu.updateZN(cpu.getA());
+        }));
+
+        // EOR (Indirect),Y (0x51)
+        instructionMap.put(0x51, createInstruction("EOR", 5, cpu -> {
+            int zp = cpu.readByte(cpu.getPC());
+            cpu.setPC(cpu.getPC() + 1);
+            int addr = (cpu.readWord(zp) + cpu.getY()) & 0xFFFF;
+            int value = cpu.readByte(addr);
+            cpu.setA(cpu.getA() ^ value);
+            cpu.updateZN(cpu.getA());
+        }));
+
+        // EOR Zero Page,X (0x55)
+        instructionMap.put(0x55, createInstruction("EOR", 4, cpu -> {
+            int addr = (cpu.readByte(cpu.getPC()) + cpu.getX()) & 0xFF;
+            cpu.setPC(cpu.getPC() + 1);
+            int value = cpu.readByte(addr);
+            cpu.setA(cpu.getA() ^ value);
+            cpu.updateZN(cpu.getA());
+        }));
+
+        // EOR Absolute,Y (0x59)
+        instructionMap.put(0x59, createInstruction("EOR", 4, cpu -> {
+            int addr = (cpu.readWord(cpu.getPC()) + cpu.getY()) & 0xFFFF;
+            cpu.setPC(cpu.getPC() + 2);
+            int value = cpu.readByte(addr);
+            cpu.setA(cpu.getA() ^ value);
+            cpu.updateZN(cpu.getA());
+        }));
+
+        // EOR Absolute,X (0x5D)
+        instructionMap.put(0x5D, createInstruction("EOR", 4, cpu -> {
+            int addr = (cpu.readWord(cpu.getPC()) + cpu.getX()) & 0xFFFF;
             cpu.setPC(cpu.getPC() + 2);
             int value = cpu.readByte(addr);
             cpu.setA(cpu.getA() ^ value);
