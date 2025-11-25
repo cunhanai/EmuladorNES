@@ -87,16 +87,13 @@ public class NES {
                 int decoded = 0x4000 + (address & 0x1F);
                 switch (decoded) {
                     case 0x4016:
-                        System.out.printf("WRITE $%04X <= %02X (strobe)%n", decoded, value & 0xFF);
                         controller1.write(value);
                         controller2.write(value);
                         break;
                     case 0x4017:
-                        System.out.printf("WRITE $%04X <= %02X%n", decoded, value & 0xFF);
                         apu.writeRegister(decoded, value);
                         break;
                     case 0x4014:
-                        System.out.printf("WRITE $%04X <= %02X (OAM DMA)%n", decoded, value & 0xFF);
                         queueOamDma(value & 0xFF);
                         break;
                     default:
