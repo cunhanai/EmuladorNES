@@ -69,25 +69,18 @@ hardware clássico de 8-bit.
 
 - Java 8 ou superior instalado
 - Arquivo de ROM NES (.nes) em formato iNES
-
-### Compilação
-
-```bash
-# Navegar até o diretório do projeto
-cd "AnalisadorDeRom"
-
-# Compilar todos os arquivos
-javac -d . src/**/*.java
-```
+- IDEA IntelliJ (mais estável)
 
 ### Execução
+
+- Compilar o projeto
 
 ```bash
 # Executar com uma ROM
 java AnalisadorRomNES "caminho/para/jogo.nes"
 
 # Exemplo:
-java AnalisadorRomNES "ROM/Super Mario Bros. (Europe).nes"
+java AnalisadorRomNES "Super Mario Bros. (Europe).nes"
 ```
 
 ### 🎮 Mapeamento dos controles

@@ -146,6 +146,7 @@ public class NES {
         LeitorINES leitor = new LeitorINES(filePath);
         memoria.loadPRGComEspelhamento(leitor.getPrgRom());
         MapperType mapperType = MapperType.fromId(leitor.getHeader().getMapeamento());
+
         PPU.MirrorMode mirror = leitor.getHeader().isIgnorarEspelhamento()
             ? PPU.MirrorMode.FOUR_SCREEN
             : ("Vertical".equalsIgnoreCase(leitor.getHeader().getEspelhamento())
@@ -158,6 +159,7 @@ public class NES {
             default:
                 throw new IOException("Mapper não suportado: " + mapperType);
         }
+
         mapper.connect(ppu);
         ppu.setMapper(mapper);
         memoria.setMapper(mapper);
