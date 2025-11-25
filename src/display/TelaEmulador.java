@@ -2,7 +2,7 @@ package display;
 
 import input.Controller;
 import ppu.PPU;
-import Memory.MemoryAccessMonitor;
+import Memory.MonitorAcessoMemoria;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +13,7 @@ import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
 
 // Janela principal do emulador e controles de teclado
-public class EmulatorWindow extends JFrame implements KeyListener {
+public class TelaEmulador extends JFrame implements KeyListener {
     private static final int SCALE = 2; // Escala de renderização
     
     private BufferedImage screen;
@@ -24,7 +24,7 @@ public class EmulatorWindow extends JFrame implements KeyListener {
     private JCheckBox monitorToggle;
 
     // Construtor da janela do emulador
-    public EmulatorWindow(Controller controller, MemoryAccessMonitor monitor) {
+    public TelaEmulador(Controller controller, MonitorAcessoMemoria monitor) {
         this.controller = controller;
         
         // Cria a imagem de exibição

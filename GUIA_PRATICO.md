@@ -161,39 +161,39 @@ monitor.addFilter("APU & I/O");      // Apenas APU e I/O
 ### Exemplo 1: Carregar e Executar uma ROM
 
 ```java
+import display.TelaEmulador;
 import nes.NES;
-import display.EmulatorWindow;
 
 public class MinimalEmulator {
     public static void main(String[] args) {
         try {
             // 1. Criar emulador
             NES emulator = new NES();
-            
+
             // 2. Carregar ROM
             emulator.loadROM("ROM/MeuJogo.nes");
-            
+
             // 3. Reset
             emulator.reset();
-            
+
             // 4. Criar janela
-            EmulatorWindow window = new EmulatorWindow(
-                emulator.getController1(),
-                emulator.getMemory().getMonitor()
+            TelaEmulador window = new TelaEmulador(
+                    emulator.getController1(),
+                    emulator.getMemoria().getMonitor()
             );
-            
+
             // 5. Iniciar emulador
             emulator.start();
-            
+
             // 6. Loop principal
             while (emulator.isRunning()) {
                 emulator.runFrame();
                 window.updateScreen(emulator.getFramebuffer());
-                
+
                 // Esperar próximo frame (~16.6ms)
                 Thread.sleep(16);
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -247,34 +247,34 @@ public class CPUMonitor {
 ### Exemplo 3: Simular Entrada do Controlador
 
 ```java
+import display.TelaEmulador;
 import nes.NES;
 import input.Controller;
-import display.EmulatorWindow;
 
 public class ControllerTest {
     public static void main(String[] args) throws Exception {
         NES nes = new NES();
         nes.loadROM("ROM/MeuJogo.nes");
         nes.reset();
-        
+
         Controller controller = nes.getController1();
-        EmulatorWindow window = new EmulatorWindow(
-            controller,
-            nes.getMemory().getMonitor()
+        TelaEmulador window = new TelaEmulador(
+                controller,
+                nes.getMemoria().getMonitor()
         );
-        
+
         nes.start();
-        
+
         // Simular sequência de entrada
         Thread.sleep(1000); // Espera 1 segundo
-        
+
         // Pressiona Start
         controller.setButton(Controller.BUTTON_START, true);
         nes.runFrame();
         controller.setButton(Controller.BUTTON_START, false);
-        
+
         Thread.sleep(1000);
-        
+
         // Pressiona A 10 vezes
         for (int i = 0; i < 10; i++) {
             controller.setButton(Controller.BUTTON_A, true);
@@ -283,7 +283,7 @@ public class ControllerTest {
             nes.runFrame();
             Thread.sleep(100);
         }
-        
+
         // Continua execução normal
         while (nes.isRunning()) {
             nes.runFrame();
@@ -345,6 +345,7 @@ public class ScreenshotCapture {
 ```java
 import nes.NES;
 import Memory.MemoryMap;
+
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
@@ -354,42 +355,42 @@ public class MemoryDump {
         nes.loadROM("ROM/MeuJogo.nes");
         nes.reset();
         nes.start();
-        
+
         // Executar alguns frames
         for (int i = 0; i < 60; i++) {
             nes.runFrame();
         }
-        
+
         // Fazer dump da memória
-        MemoryMap memory = nes.getMemory();
+        MemoryMap memory = nes.getMemoria();
         PrintWriter writer = new PrintWriter(new FileWriter("memory_dump.txt"));
-        
+
         // Dump de Zero Page ($0000-$00FF)
         writer.println("=== ZERO PAGE ===");
         dumpMemoryRange(memory, writer, 0x0000, 0x00FF);
-        
+
         // Dump de Stack ($0100-$01FF)
         writer.println("\n=== STACK ===");
         dumpMemoryRange(memory, writer, 0x0100, 0x01FF);
-        
+
         // Dump de RAM ($0200-$07FF)
         writer.println("\n=== RAM ===");
         dumpMemoryRange(memory, writer, 0x0200, 0x07FF);
-        
+
         writer.close();
         System.out.println("Memory dump salvo: memory_dump.txt");
     }
-    
+
     private static void dumpMemoryRange(MemoryMap memory, PrintWriter writer,
                                         int start, int end) {
         for (int addr = start; addr <= end; addr += 16) {
             writer.printf("$%04X: ", addr);
-            
+
             // Hex dump
             for (int i = 0; i < 16 && (addr + i) <= end; i++) {
                 writer.printf("%02X ", memory.readByte(addr + i));
             }
-            
+
             // ASCII representation
             writer.print(" | ");
             for (int i = 0; i < 16 && (addr + i) <= end; i++) {
@@ -397,7 +398,7 @@ public class MemoryDump {
                 char c = (b >= 32 && b < 127) ? (char) b : '.';
                 writer.print(c);
             }
-            
+
             writer.println();
         }
     }

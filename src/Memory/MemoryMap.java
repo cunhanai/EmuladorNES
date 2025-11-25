@@ -10,7 +10,7 @@ public class MemoryMap {
     private static final int MEMORY_SIZE = 0x10000; // 64 KB
     private final byte[] addressSpace = new byte[MEMORY_SIZE];
     private final List<MemorySegment> segments = new ArrayList<>();
-    private final MemoryAccessMonitor monitor;
+    private final MonitorAcessoMemoria monitor;
 
     // Handlers opcionais para integração com PPU/APU/Input
     private transient MemoryMappedDevice ppuHandler;
@@ -20,7 +20,7 @@ public class MemoryMap {
 
     // inicializa segmentos
     public MemoryMap() {
-        this.monitor = new MemoryAccessMonitor();
+        this.monitor = new MonitorAcessoMemoria();
         initializeSegments();
     }
 
@@ -148,18 +148,10 @@ public class MemoryMap {
         return null;
     }
 
-    // imprime o layout
-    public void printLayout() {
-        System.out.println("===== nes.NES Memory Layout =====");
-        for (MemorySegment s : segments) {
-            System.out.printf("%-20s [0x%04X - 0x%04X] %s\n", s.getName(), s.getStart(), s.getEnd(), s.isReadOnly() ? "(ROM)" : "(RW)");
-        }
-    }
-    
     /**
      * Obtém o monitor de acessos à memória
      */
-    public MemoryAccessMonitor getMonitor() {
+    public MonitorAcessoMemoria getMonitor() {
         return monitor;
     }
 }

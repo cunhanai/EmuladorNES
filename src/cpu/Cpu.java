@@ -7,13 +7,11 @@ import Memory.MemoryMap;
  * Inclui registradores, flags, e ciclo de execução
  */
 public class Cpu {
-    // Registradores de 8 bits
     private int A;  // Acumulador
     private int X;  // Registrador de indice X
     private int Y;  // Registrador de indice Y
     private int SP; // Stack Pointer (0x0100 - 0x01FF)
     
-    // Registrador de 16 bits
     private int PC; // Program Counter
     
     // Flags de status (P register)

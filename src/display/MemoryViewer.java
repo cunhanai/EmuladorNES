@@ -1,8 +1,8 @@
 package display;
 
-import Memory.MemoryAccessMonitor;
-import Memory.MemoryAccessMonitor.MemoryAccess;
-import Memory.MemoryAccessMonitor.AccessType;
+import Memory.MonitorAcessoMemoria;
+import Memory.MonitorAcessoMemoria.MemoryAccess;
+import Memory.MonitorAcessoMemoria.AccessType;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,7 +15,7 @@ import java.util.List;
 // Visualizador de acessos à memória em tempo real
 public class MemoryViewer extends JPanel {
     
-    private final MemoryAccessMonitor monitor;
+    private final MonitorAcessoMemoria monitor;
     private final JTable accessTable;
     private final DefaultTableModel tableModel;
     private final JLabel statsLabel;
@@ -28,7 +28,7 @@ public class MemoryViewer extends JPanel {
     // Aumenta o intervalo de atualização para reduzir impacto na UI
     private static final long UPDATE_INTERVAL_MS = 250; // Atualiza a cada 250ms
 
-    public MemoryViewer(MemoryAccessMonitor monitor) {
+    public MemoryViewer(MonitorAcessoMemoria monitor) {
         this.monitor = monitor;
 
         // Tabela de acessos
@@ -121,7 +121,7 @@ public class MemoryViewer extends JPanel {
     private void applyFilter() {
         String selected = (String) filterCombo.getSelectedItem();
         
-        monitor.clearFilters();
+        monitor.limparFiltros();
         
         switch (selected) {
             case "Apenas Leituras":

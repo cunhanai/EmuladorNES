@@ -6,7 +6,7 @@
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Funcional-success?style=for-the-badge)
 
-**Emulador funcional do Nintendo Entertainment System desenvolvido em Java**
+**Emulador parcial do Nintendo Entertainment System desenvolvido em Java**
 
 *Projeto Acadêmico - Sistemas Operacionais - FURB*
 
@@ -18,11 +18,13 @@
 
 ## 📖 Sobre
 
-Este é um **emulador completo do NES (Nintendo Entertainment System)** desenvolvido como projeto acadêmico para a disciplina de Sistemas Operacionais. O projeto demonstra conceitos fundamentais de SO através da emulação de hardware clássico.
+Este é um **emulador parcial do NES (Nintendo Entertainment System)** desenvolvido como projeto acadêmico para a 
+disciplina de Sistemas Operacionais. O projeto demonstra alguns conceitos fundamentais de SO através da emulação de um
+hardware clássico de 8-bit.
 
 ### 🎯 Objetivos
 
-- ✅ Implementar gerenciamento de memória segmentada
+- ✅ Implementar gerênciamento de memória segmentada
 - ✅ Demonstrar sincronização de processos em tempo real
 - ✅ Simular dispositivos de I/O mapeados em memória
 - ✅ Implementar sistema de interrupções (NMI)
@@ -30,12 +32,11 @@ Este é um **emulador completo do NES (Nintendo Entertainment System)** desenvol
 
 ### 👥 Autores
 
-- **Daniel Neves**
-- **Ana Julia da Cunha**
+- **Ana Júlia da Cunha**
+- **Daniel Iensen Neves**
 
 **Instituição**: FURB (Universidade Regional de Blumenau)  
-**Disciplina**: Sistemas Operacionais - 6º Semestre  
-**Tema**: Memória e mapeamento em consoles clássicos
+**Disciplina**: Sistemas Operacionais - 6º Semestre
 
 ---
 
@@ -43,19 +44,18 @@ Este é um **emulador completo do NES (Nintendo Entertainment System)** desenvol
 
 ### 🖥️ Hardware Emulado
 
-| Componente | Descrição | Status |
-|------------|-----------|--------|
-| **CPU 6502** | Processador principal com 256 instruções | ✅ Completo |
-| **PPU** | Picture Processing Unit (256×240 pixels) | ✅ Funcional |
-| **APU** | Audio Processing Unit (5 canais) | ✅ Funcional |
-| **Memory Map** | 64KB de espaço de endereçamento | ✅ Completo |
-| **Controllers** | 2 controles com 8 botões cada | ✅ Completo |
-| **Mapper 0** | NROM (cartuchos simples) | ✅ Completo |
+| Componente | Descrição                                                            |
+|------------|----------------------------------------------------------------------|
+| **CPU 6502** | Processador principal com 256 instruções                             |
+| **PPU** | Picture Processing Unit (256×240 pixels), responsável pelos gráficos |
+| **APU** | Audio Processing Unit (5 canais), responsável pelos áudios           |
+| **Memory Map** | 64KB de espaço de endereçamento                                      |
+| **Controllers** | Mapeamento dos controles do jogo para o teclado                      |
 
 ### 🎮 Funcionalidades
 
-- ✅ Execução de ROMs formato iNES (.nes)
-- ✅ Renderização de gráficos em tempo real (60 FPS)
+- ✅ Execução de ROMs formato iNES (`.nes`)
+- ✅ Renderização de gráficos em tempo real (60.09 FPS)
 - ✅ Áudio com 5 canais (Pulse, Triangle, Noise, DMC)
 - ✅ Entrada via teclado
 - ✅ Monitor de acessos à memória
@@ -87,7 +87,7 @@ javac -d . src/**/*.java
 java AnalisadorRomNES "caminho/para/jogo.nes"
 
 # Exemplo:
-java AnalisadorRomNES "ROM/Super Mario Bros. (Europe)/Super Mario Bros. (Europe).nes"
+java AnalisadorRomNES "ROM/Super Mario Bros. (Europe).nes"
 ```
 
 ### 🎮 Controles

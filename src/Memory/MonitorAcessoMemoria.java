@@ -7,7 +7,7 @@ import java.util.List;
  * Monitor de acessos à memória em tempo real
  * Registra todas as operações de leitura e escrita
  */
-public class MemoryAccessMonitor {
+public class MonitorAcessoMemoria {
     
     public enum AccessType {
         READ, WRITE
@@ -57,11 +57,11 @@ public class MemoryAccessMonitor {
     private Integer filterAddressEnd;
     private AccessType filterType;
     
-    public MemoryAccessMonitor() {
+    public MonitorAcessoMemoria() {
         this(10000); // Mantém últimos 10000 acessos
     }
     
-    public MemoryAccessMonitor(int maxHistorySize) {
+    public MonitorAcessoMemoria(int maxHistorySize) {
         this.maxHistorySize = maxHistorySize;
         this.accessHistory = new ArrayList<>();
         this.enabled = true;
@@ -176,7 +176,7 @@ public class MemoryAccessMonitor {
     }
     
     // Limpa todos os filtros
-    public void clearFilters() {
+    public void limparFiltros() {
         this.filterAddressStart = null;
         this.filterAddressEnd = null;
         this.filterType = null;

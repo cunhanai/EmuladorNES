@@ -21,7 +21,7 @@ public class NES {
     private Cpu cpu;
     private PPU ppu;
     private APU apu;
-    private MemoryMap memory;
+    private MemoryMap memoria;
     private Controller controller1;
     private Controller controller2;
 
@@ -34,8 +34,8 @@ public class NES {
      * Construtor do emulador nes.NES
      */
     public NES() {
-        memory = new MemoryMap();
-        cpu = new Cpu(memory);
+        memoria = new MemoryMap();
+        cpu = new Cpu(memoria);
         ppu = new PPU();
         apu = new APU();
         controller1 = new Controller();
@@ -49,7 +49,7 @@ public class NES {
      */
     private void setupMemoryHandlers() {
         // Conecta a PPU como dispositivo mapeado em memória para a faixa 0x2000-0x3FFF
-        memory.setPpuHandler(new MemoryMappedDevice() {
+        memoria.setPpuHandler(new MemoryMappedDevice() {
             @Override
             public int read(int address) {
                 int reg = 0x2000 + (address & 0x7);
@@ -64,7 +64,7 @@ public class NES {
         });
 
         // Conecta APU e controles em 0x4000-0x401F
-        memory.setApuHandler(new MemoryMappedDevice() {
+        memoria.setApuHandler(new MemoryMappedDevice() {
             @Override
             public int read(int address) {
                 int decoded = 0x4000 + (address & 0x1F);
@@ -73,11 +73,9 @@ public class NES {
                         return apu.readRegister(decoded) & 0xFF;
                     case 0x4016:
                         int v1 = controller1.read();
-                        System.out.printf("READ  $%04X = %02X (controller1)%n", decoded, v1 & 0xFF);
                         return v1;
                     case 0x4017:
                         int v2 = controller2.read();
-                        System.out.printf("READ  $%04X = %02X (controller2)%n", decoded, v2 & 0xFF);
                         return v2;
                     default:
                         return 0;
@@ -116,7 +114,7 @@ public class NES {
     private void queueOamDma(int page) {
         int baseAddr = (page & 0xFF) << 8;
         for (int i = 0; i < 256; i++) {
-            int data = memory.readByte(baseAddr + i);
+            int data = memoria.readByte(baseAddr + i);
             ppu.writeOAMByte(i, data);
         }
         int penalty = 513 + ((cpuCycles & 0x01) == 0 ? 1 : 0);
@@ -149,7 +147,7 @@ public class NES {
      */
     public void loadROM(String filePath) throws IOException {
         LeitorINES leitor = new LeitorINES(filePath);
-        memory.loadPRGComEspelhamento(leitor.getPrgRom());
+        memoria.loadPRGComEspelhamento(leitor.getPrgRom());
         MapperType mapperType = MapperType.fromId(leitor.getHeader().getMapeamento());
         PPU.MirrorMode mirror = leitor.getHeader().isIgnorarEspelhamento()
             ? PPU.MirrorMode.FOUR_SCREEN
@@ -165,7 +163,7 @@ public class NES {
         }
         mapper.connect(ppu);
         ppu.setMapper(mapper);
-        memory.setMapper(mapper);
+        memoria.setMapper(mapper);
         System.out.println("ROM carregada: " + filePath + " (mapper " + mapperType + ")");
     }
 
@@ -299,8 +297,8 @@ public class NES {
     /**
      * Obtém o mapa de memória
      */
-    public MemoryMap getMemory() {
-        return memory;
+    public MemoryMap getMemoria() {
+        return memoria;
     }
 
     /**
