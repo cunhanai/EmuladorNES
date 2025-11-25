@@ -90,7 +90,7 @@ java AnalisadorRomNES "caminho/para/jogo.nes"
 java AnalisadorRomNES "ROM/Super Mario Bros. (Europe).nes"
 ```
 
-### 🎮 Controles
+### 🎮 Mapeamento dos controles
 
 ```
 ┌────────────────┬─────────────┐
@@ -133,7 +133,8 @@ $0000-$07FF  │ RAM Interna (2KB)
 $0800-$1FFF  │ Espelhamento de RAM
 $2000-$2007  │ Registradores PPU
 $2008-$3FFF  │ Espelhamento de PPU
-$4000-$4017  │ APU e I/O (Controles)
+$4000-$4017  │ APU e I/O
+$4018-$401F  │ Funcionalidades de APU e I/O normalmentr desabilitadas
 $4020-$5FFF  │ ROM de Expansão
 $6000-$7FFF  │ SRAM (Save RAM)
 $8000-$FFFF  │ PRG-ROM (Código do jogo)
@@ -181,14 +182,6 @@ $8000-$FFFF  │ PRG-ROM (Código do jogo)
 | Taxa de Frames | 60.0988 FPS (NTSC) |
 | Canais de Áudio | 5 (2 Pulse, Triangle, Noise, DMC) |
 
-### Ciclos por Frame
-
-- **CPU**: ~29,780 ciclos
-- **PPU**: ~89,340 ciclos (3× CPU)
-- **APU**: ~29,780 ciclos
-
----
-
 ## 📁 Estrutura do Projeto
 
 ```
@@ -204,20 +197,8 @@ AnalisadorDeRom/
 │   ├── nes/                      # Integração NES
 │   │   └── memory/               # Mappers
 │   └── ppu/                      # Picture Processing Unit
-├── ROM/                          # ROMs de teste
-├── DOCUMENTACAO.md               # Documentação completa
-└── README.md                     # Este arquivo
+└── ROM/                          # ROMs de teste
 ```
-
----
-
-## 🎮 Jogos Testados
-
-| Jogo | Mapper | Status |
-|------|--------|--------|
-| Super Mario Bros | 0 (NROM) | ✅ Funcional |
-| Donkey Kong | 0 (NROM) | ✅ Funcional |
-| Pac-Man | 0 (NROM) | ✅ Funcional |
 
 ---
 
@@ -225,74 +206,6 @@ AnalisadorDeRom/
 
 - **Mappers**: Apenas NROM (Mapper 0) implementado
 - **APU**: Alguns detalhes de timing simplificados
-- **PPU**: Scrolling pode ter pequenos glitches em jogos complexos
-- **Performance**: Requer CPU moderna para manter 60 FPS estável
+- **PPU**: Scrolling pode ter pequenos glitches, cores não estão fiéis
 
 ---
-
-## 🔮 Melhorias Futuras
-
-- [ ] Implementar mais mappers (MMC1, MMC3, UxROM)
-- [ ] Melhorar precisão da APU
-- [ ] Implementar save states
-- [ ] Adicionar debugger com disassembler
-- [ ] Suporte a PAL (50 Hz)
-- [ ] Configuração personalizável de controles
-
----
-
-## 📚 Recursos e Referências
-
-### Documentação Técnica
-- [NESdev Wiki](https://www.nesdev.org/wiki/Nesdev_Wiki) - Documentação oficial
-- [6502.org](http://www.6502.org/) - Referência do processador
-- [iNES Format](https://www.nesdev.org/wiki/INES) - Formato de ROMs
-
-### Ferramentas
-- [FCEUX](http://fceux.com/) - Emulador com debugger
-- [Mesen](https://www.mesen.ca/) - Emulador moderno
-
-### Aprendizado
-- [Easy 6502](https://skilldrick.github.io/easy6502/) - Tutorial Assembly
-- [NES Emulator Book](https://bugzmanov.github.io/nes_ebook/) - Guia de desenvolvimento
-
----
-
-## 📖 Documentação Completa
-
-Para informações detalhadas sobre a implementação, arquitetura e funcionamento interno, consulte a [**Documentação Completa**](DOCUMENTACAO.md).
-
-A documentação inclui:
-- Explicação detalhada de cada componente
-- Diagramas de fluxo de execução
-- Especificações técnicas completas
-- Exemplos de código comentados
-- Conceitos de SO aplicados
-
----
-
-## 📄 Licença
-
-Este projeto é de cunho **educacional** e foi desenvolvido para fins acadêmicos.
-
-**Nota Importante**: As ROMs de jogos NES são propriedade de seus respectivos donos. Este emulador não inclui ROMs comerciais. Use apenas ROMs que você possui legalmente ou ROMs de domínio público/homebrew.
-
----
-
-## 🙏 Agradecimentos
-
-- Professor da disciplina de Sistemas Operacionais - FURB
-- Comunidade NESdev pela documentação técnica
-- Desenvolvedores de emuladores open-source que serviram de referência
-
----
-
-<div align="center">
-
-**Desenvolvido com ❤️ para aprender Sistemas Operacionais**
-
-FURB - Universidade Regional de Blumenau  
-2025
-
-</div>
-
